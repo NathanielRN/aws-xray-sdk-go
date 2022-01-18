@@ -38,7 +38,7 @@ jobs:
           mkdir -p "bin"
           mkdir -p "pkg"
           mkdir -p "src"
-          # for dep, bash and Windows
+          # for bash and Windows
           echo "INSTALL_DIRECTORY=$(pwd)/bin" >> $GITHUB_ENV
         shell: bash
       - name: Check out code
@@ -48,12 +48,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          if go help mod > /dev/null 2>&1 ; then
-            go mod download
-          else
-            curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-            dep ensure
-          fi
+          go mod download
         env:
           GO111MODULE: "on"
         shell: bash
@@ -91,7 +86,7 @@ jobs:
           mkdir -p "bin"
           mkdir -p "pkg"
           mkdir -p "src"
-          # for dep, bash and Windows
+          # for bash and Windows
           echo "INSTALL_DIRECTORY=$(pwd)/bin" >> $GITHUB_ENV
         shell: bash
       - name: Check out code
@@ -101,12 +96,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          if go help mod > /dev/null 2>&1 ; then
-            go mod download
-          else
-            curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-            dep ensure
-          fi
+          go mod download
         env:
           GO111MODULE: "on"
         shell: bash
