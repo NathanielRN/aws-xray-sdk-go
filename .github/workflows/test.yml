@@ -22,40 +22,17 @@ jobs:
           - '1.16'
           - '1.17'
           - '1'
-
     steps:
-
       - name: Set up Go ${{ matrix.go }}
         uses: actions/setup-go@v1
         with:
           go-version: ${{ matrix.go }}
-        id: go
-      - name: Set up INSTALL_DIRECTORY
-        run: |
-
-          mkdir -p "bin"
-          mkdir -p "pkg"
-          mkdir -p "src"
-          # for bash and Windows
-          echo "INSTALL_DIRECTORY=$(pwd)/bin" >> $GITHUB_ENV
-        shell: bash
       - name: Check out code
         uses: actions/checkout@v2
         with:
           path: src/github.com/NathanielRN/aws-xray-sdk-go
-
-      - name: Install Dependencies
-        run: |
-          go mod download
-        env:
-          GO111MODULE: "on"
-        shell: bash
-        working-directory: src/github.com/NathanielRN/aws-xray-sdk-go
-
       - name: Test
         run: make test-with-race
-        env:
-          GO111MODULE: "on"
         shell: bash
         working-directory: src/github.com/NathanielRN/aws-xray-sdk-go
 
@@ -69,38 +46,17 @@ jobs:
           - ubuntu-latest
         go:
           - '1.14'
-
     steps:
       - name: Set up Go ${{ matrix.go }}
         uses: actions/setup-go@v1
         with:
           go-version: ${{ matrix.go }}
         id: go
-      - name: Set up INSTALL_DIRECTORY
-        run: |
-
-          mkdir -p "bin"
-          mkdir -p "pkg"
-          mkdir -p "src"
-          # for bash and Windows
-          echo "INSTALL_DIRECTORY=$(pwd)/bin" >> $GITHUB_ENV
-        shell: bash
       - name: Check out code
         uses: actions/checkout@v2
         with:
           path: src/github.com/NathanielRN/aws-xray-sdk-go
-
-      - name: Install Dependencies
-        run: |
-          go mod download
-        env:
-          GO111MODULE: "on"
-        shell: bash
-        working-directory: src/github.com/NathanielRN/aws-xray-sdk-go
-
       - name: Benchmark
         run: go test -v -benchmem -run=^$$ -bench=. ./... | tee benchmark/output.txt
-        env:
-          GO111MODULE: "on"
         shell: bash
         working-directory: src/github.com/NathanielRN/aws-xray-sdk-go
